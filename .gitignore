@@ -1,0 +1,81 @@
+### General ###
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyc
+*$py.class
+
+### Entornos virtuales ###
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+### Dependencias y paquetes ###
+*.egg-info/
+.installed.cfg
+*.egg
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+
+### Configuración local ###
+local_settings.py
+instance/
+webassets-cache/
+
+### Logs y archivos temporales ###
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+.cache
+.tox/
+.nox/
+nosetests.xml
+.coverage
+.coverage.*
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+.coverage
+.coverage.*
+
+### FastAPI específico ###
+/logs
+*.db
+*.sqlite3
+db.sqlite3
+db.sqlite3-journal
+
+### Oracle con SQLAlchemy ###
+oracle_wallet/
+*.dmp
+*.log
+*.trc
+*.trm
+network/admin/tnsnames.ora
+network/admin/sqlnet.ora
+
+### Archivos de configuración y credenciales ###
+.env
+config.yaml
+config.json
+*.pem
+*.crt
+*.key
+
+### IDEs ###
+# PyCharm
+.idea/
+.vscode/
