@@ -16,29 +16,22 @@ Se conecta a una base de datos Oracle de manera remota y proporciona datos a un 
 ## Estructura del proyecto
 ```
 backend/
-│── app/
+├── app/
 │   ├── core/
-│   │   ├── config.py   # Configuración de variables de entorno
-│   ├── routes/         # Endpoints de la API
-│   ├── models/         # Modelos de la base de datos
-│   ├── services/       # Lógica de negocio y consultas a la base de datos
-│   ├── config.py    # Carga variables de entorno
-│   ├── models.py    # Modelos de base de datos (si se usa SQLAlchemy)
+│   │   ├── config.py       # Configuración de variables de entorno
+│   │   ├── database.py     # Conexión a la base de datos
 │   ├── routes/
-│   │   ├── consumo.py  # Endpoints de consumo de agua
-│   │   ├── usuario.py  # Endpoints de usuarios
+│   │   ├── consumo.py      # Endpoints de consumo de agua
+│   │   ├── usuario.py      # Endpoints de usuario
+│   ├── models/
+│   │   ├── __init__.py     # Inicialización del módulo de modelos
+│   │   ├── consumo.py      # Modelos relacionados con consumo
+│   │   ├── usuario.py      # Modelos relacionados con usuario
 │   ├── services/
-│   │   ├── database.py  # Configuración de la BD
-│   │   ├── consumo_service.py  # Lógica del negocio
-│   │   ├── usuario_service.py  # Lógica de usuarios
-│   ├── schemas/
-│   │   ├── consumo_schema.py  # Esquema de validación de consumo
-│   │   ├── usuario_schema.py  # Esquema de validación de usuario
-│── main.py             # Punto de entrada de FastAPI
-│-- .env           # Variables de entorno
-│-- requirements.txt  # Dependencias
-│── .gitignore          # Archivos a ignorar en Git
-│-- README.md     # Documentación del backend
+│   │   ├── __init__.py     # Inicialización del módulo de servicios
+│   │   ├── consumo.py      # Lógica de negocio para consumo
+│   │   ├── usuario.py      # Lógica de negocio para usuario
+│   ├── main.py             # Punto de entrada de la aplicación
 ```
 
 ## Instalación y Configuración

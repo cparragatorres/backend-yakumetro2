@@ -5,7 +5,7 @@ __pycache__/
 *.pyc
 *$py.class
 
-### Entornos virtuales ###
+# Entornos virtuales
 .env
 .venv
 env/
@@ -69,6 +69,7 @@ network/admin/sqlnet.ora
 
 ### Archivos de configuración y credenciales ###
 .env
+config
 config.yaml
 config.json
 *.pem
