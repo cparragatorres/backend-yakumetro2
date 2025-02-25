@@ -10,7 +10,7 @@ def get_importe(numero_conexion: str):
     result = obtener_importe_por_codigo(numero_conexion)
 
     if result is None:
-        raise HTTPException(status_code=404, detail="No se encontró el importe para el código")
+        raise HTTPException(status_code=404, detail="No se encontró el importe para el código de conexión")
 
     return {
         "numero_conexion": numero_conexion,
