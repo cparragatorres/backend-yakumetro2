@@ -1,11 +1,9 @@
+# backend/app/main.py
+
 from fastapi import FastAPI
-from app.routes import consumo
+from app.routes import importe_por_codigo_routes
 
 app = FastAPI()
 
-@app.get("/")
-def read_root():
-    return {"message": "Yakumetro2 Backend is running 🚀"}
-
-# Incluir las rutas de consumo
-app.include_router(consumo.router)
+# Incluir la ruta de importe por código
+app.include_router(importe_por_codigo_routes.router)

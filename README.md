@@ -18,20 +18,14 @@ Se conecta a una base de datos Oracle de manera remota y proporciona datos a un 
 backend/
 ├── app/
 │   ├── core/
-│   │   ├── config.py       # Configuración de variables de entorno
-│   │   ├── database.py     # Conexión a la base de datos
+│   │   ├── config.py         # Configuración de variables de entorno
+│   │   ├── database.py       # Conexión a la base de datos
 │   ├── routes/
-│   │   ├── consumo.py      # Endpoints de consumo de agua
-│   │   ├── usuario.py      # Endpoints de usuario
-│   ├── models/
-│   │   ├── __init__.py     # Inicialización del módulo de modelos
-│   │   ├── consumo.py      # Modelos relacionados con consumo
-│   │   ├── usuario.py      # Modelos relacionados con usuario
+│   │   ├── importe_por_codigo_routes.py  # Rutas para obtener importe por código
 │   ├── services/
-│   │   ├── __init__.py     # Inicialización del módulo de servicios
-│   │   ├── consumo.py      # Lógica de negocio para consumo
-│   │   ├── usuario.py      # Lógica de negocio para usuario
-│   ├── main.py             # Punto de entrada de la aplicación
+│   │   ├── __init__.py       # Inicialización del módulo de servicios
+│   │   ├── importe_por_codigo_service.py # Lógica de consulta del importe
+│   ├── main.py               # Punto de entrada de la aplicación
 ```
 
 ## Instalación y Configuración
