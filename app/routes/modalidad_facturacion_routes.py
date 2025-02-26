@@ -1,7 +1,7 @@
 # backend/app/routes/medidor_existe_routes.py
 
 from fastapi import APIRouter, HTTPException
-from app.services.medidor_existe_service import verificar_medidor
+from app.services.modalidad_facturacion_service import verificar_medidor
 
 router = APIRouter()
 
@@ -15,6 +15,5 @@ def get_medidor(numero_conexion: str):
 
     return {
         "numero_conexion": numero_conexion,
-        "existe_medidor": bool(result),  # True o False
-        "codigo": result  # 1 o 0
+        "modalidad_facturacion": result
     }
