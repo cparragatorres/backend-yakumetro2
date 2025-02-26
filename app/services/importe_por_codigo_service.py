@@ -16,7 +16,7 @@ def obtener_importe_por_codigo(numero_conexion: str):
         SELECT imtotal
         FROM ep26_24_base_codcon
         WHERE codcon = :1
-        ORDER BY nuanio DESC, nummes DESC
+        ORDER BY nummes DESC
         FETCH FIRST 1 ROW ONLY
         '''
 
