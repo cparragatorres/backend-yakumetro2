@@ -20,11 +20,27 @@ def obtener_consumo_distrito(numero_conexion: str):
         cursor = conn.cursor()
 
         query = '''
-        SELECT nummes, ROUND(imtotal, 1) AS imtotal_redondeado
-        FROM ep26_24_base_codcon
-        WHERE codcon = :1
-        ORDER BY nummes DESC
-        FETCH FIRST 5 ROW ONLY
+        WITH DistritoPromedio AS (
+            SELECT
+                g.coddis,
+                b.nummes,
+                ROUND(AVG(b.imtotal), 1) AS prom_distrito_imtotal_redondeado
+            FROM ep26_24_base_codcon b
+            JOIN ep26_24_geografica_codcon g ON b.codcon = g.codcon
+            GROUP BY g.coddis, b.nummes
+        )
+        SELECT
+            b.nummes,
+            ROUND(b.imtotal, 1) AS imtotal_redondeado,
+            dp.prom_distrito_imtotal_redondeado
+        FROM ep26_24_base_codcon b
+        JOIN ep26_24_geografica_codcon g ON b.codcon = g.codcon
+        JOIN DistritoPromedio dp
+            ON g.coddis = dp.coddis
+            AND b.nummes = dp.nummes
+        WHERE b.codcon = :1
+        ORDER BY b.nummes DESC
+        FETCH FIRST 5 ROWS ONLY
         '''
 
         cursor.execute(query, [numero_conexion])
@@ -37,9 +53,12 @@ def obtener_consumo_distrito(numero_conexion: str):
         # Si los resultados existen, procesamos los datos
         if results:
             consumo_distrito = []
-            promedio = round(sum(r[1] for r in results) / len(results), 2)  # Calcular promedio una vez
 
             for result in results:
+
+                promedio = result[2]
+                promedio_formateado = float(f"{promedio:.2f}")
+
                 mes = meses.get(result[0], "Mes Desconocido")  # Mapear el mes
                 consumo = result[1]
 
@@ -48,7 +67,7 @@ def obtener_consumo_distrito(numero_conexion: str):
 
                 consumo_distrito.append({
                     "mes": mes,
-                    "promedio": promedio,
+                    "promedio": promedio_formateado,
                     "consumo": consumo_formateado
                 })
 
