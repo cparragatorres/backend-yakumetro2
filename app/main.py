@@ -7,7 +7,8 @@ from app.routes import (
     volumen_facturado_routes,
     modalidad_facturacion_routes,
     subsidio_existe_routes,
-    consumo_mensual_routes  # 👈 Verifica que esté bien importado
+    consumo_mensual_routes,
+    consumo_distrito_routes
 )
 
 app = FastAPI()
@@ -15,7 +16,7 @@ app = FastAPI()
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # URL del frontend en desarrollo
+    allow_origins=["http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],  # Permitir todos los métodos HTTP (GET, POST, etc.)
     allow_headers=["*"],  # Permitir todos los headers
@@ -26,4 +27,5 @@ app.include_router(importe_por_codigo_routes.router)
 app.include_router(volumen_facturado_routes.router)
 app.include_router(modalidad_facturacion_routes.router)
 app.include_router(subsidio_existe_routes.router)
-app.include_router(consumo_mensual_routes.router)  # 👈 Verifica que no haya un error aquí
+app.include_router(consumo_mensual_routes.router)
+app.include_router(consumo_distrito_routes.router)
