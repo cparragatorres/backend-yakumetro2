@@ -1,4 +1,3 @@
-# backend/app/routes/consumo_mensual_service.py
 from app.core.database import get_db
 
 # Diccionario para mapear los números de mes
@@ -31,24 +30,29 @@ def obtener_consumo_mensual(numero_conexion: str):
         cursor.execute(query, [numero_conexion])
         results = cursor.fetchall()  # Obtener los resultados de los 5 últimos meses
         print(f"🔍 Resultados obtenidos: {results}")
+
         cursor.close()
         conn.close()
 
         # Si los resultados existen, procesamos los datos
         if results:
             consumo_mensual = []
-            for i, result in enumerate(results):
+            promedio = round(sum(r[1] for r in results) / len(results), 2)  # Calcular promedio una vez
+
+            for result in results:
                 mes = meses.get(result[0], "Mes Desconocido")  # Mapear el mes
                 consumo = result[1]
 
                 # Aseguramos que el consumo tenga siempre 2 decimales
-                consumo_formateado = f"{consumo:.2f}"
+                consumo_formateado = float(f"{consumo:.2f}")
 
                 consumo_mensual.append({
-                    "mes": mes,  # Ahora usamos el nombre del mes
-                    "consumo": float(consumo_formateado),
-                    "promedio": round(sum(r[1] for r in results) / len(results), 2)
+                    "mes": mes,
+                    "consumo": consumo_formateado,
+                    "promedio": promedio
                 })
+
+            consumo_mensual = consumo_mensual[::-1]  # Invertimos el orden de los meses
             print(f"🔍 Consumo mensual procesado: {consumo_mensual}")
             return consumo_mensual
         else:

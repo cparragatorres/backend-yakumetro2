@@ -1,5 +1,3 @@
-# backend/app/routes/consumo_mensual_routes.py
-
 from fastapi import APIRouter, HTTPException
 from app.services.consumo_mensual_service import obtener_consumo_mensual
 
