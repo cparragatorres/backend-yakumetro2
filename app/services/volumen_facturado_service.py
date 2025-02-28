@@ -14,7 +14,7 @@ def obtener_volumen_facturado(numero_conexion: str):
     FROM ep26_24_base_codcon
     WHERE CODCON = :1
     ORDER BY NUMMES DESC
-    FETCH FIRST 1 ROW ONLY
+    FETCH FIRST 6 ROW ONLY
     '''
 
     cursor.execute(query, [numero_conexion])

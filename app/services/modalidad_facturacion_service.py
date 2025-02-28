@@ -16,7 +16,7 @@ def verificar_medidor(numero_conexion: str):
         FROM ep26_24_base_codudu
         WHERE codcon = :1
         ORDER BY nummes DESC
-        FETCH FIRST 1 ROW ONLY
+        FETCH FIRST 6 ROW ONLY
         '''
 
         cursor.execute(query, [numero_conexion])

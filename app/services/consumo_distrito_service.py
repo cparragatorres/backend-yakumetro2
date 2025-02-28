@@ -6,7 +6,8 @@ meses = {
     11: "Noviembre",
     10: "Octubre",
     9: "Septiembre",
-    8: "Agosto"
+    8: "Agosto",
+    7: "Julio",
 }
 
 def obtener_consumo_distrito(numero_conexion: str):
@@ -40,7 +41,7 @@ def obtener_consumo_distrito(numero_conexion: str):
             AND b.nummes = dp.nummes
         WHERE b.codcon = :1
         ORDER BY b.nummes DESC
-        FETCH FIRST 5 ROWS ONLY
+        FETCH FIRST 6 ROWS ONLY
         '''
 
         cursor.execute(query, [numero_conexion])

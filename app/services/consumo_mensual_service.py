@@ -6,7 +6,8 @@ meses = {
     11: "Noviembre",
     10: "Octubre",
     9: "Septiembre",
-    8: "Agosto"
+    8: "Agosto",
+    7: "Julio",
 }
 
 def obtener_consumo_mensual(numero_conexion: str):
@@ -24,7 +25,7 @@ def obtener_consumo_mensual(numero_conexion: str):
         FROM ep26_24_base_codcon
         WHERE codcon = :1
         ORDER BY nummes DESC
-        FETCH FIRST 5 ROW ONLY
+        FETCH FIRST 6 ROW ONLY
         '''
 
         cursor.execute(query, [numero_conexion])
