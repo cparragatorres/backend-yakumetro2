@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from app.services.consumo_subsidio_service import obtener_subsidio_mensual
+from app.services.subsidio_mensual_service import obtener_subsidio_mensual
 
 router = APIRouter()
 

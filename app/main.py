@@ -4,12 +4,12 @@ from fastapi.middleware.cors import CORSMiddleware
 # Importar todas las rutas
 from app.routes import (
     importe_por_codigo_routes,
+    subsidio_mensual_routes,
     volumen_facturado_routes,
     modalidad_facturacion_routes,
     subsidio_existe_routes,
     consumo_mensual_routes,
-    consumo_distrito_routes,
-    consumo_subsidio_routes
+    consumo_distrito_routes
 )
 
 app = FastAPI()
@@ -30,4 +30,4 @@ app.include_router(modalidad_facturacion_routes.router)
 app.include_router(subsidio_existe_routes.router)
 app.include_router(consumo_mensual_routes.router)
 app.include_router(consumo_distrito_routes.router)
-app.include_router(consumo_subsidio_routes.router)
+app.include_router(subsidio_mensual_routes.router)
