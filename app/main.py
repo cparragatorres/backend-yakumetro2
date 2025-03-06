@@ -8,7 +8,8 @@ from app.routes import (
     modalidad_facturacion_routes,
     subsidio_existe_routes,
     consumo_mensual_routes,
-    consumo_distrito_routes
+    consumo_distrito_routes,
+    consumo_subsidio_routes
 )
 
 app = FastAPI()
@@ -29,3 +30,4 @@ app.include_router(modalidad_facturacion_routes.router)
 app.include_router(subsidio_existe_routes.router)
 app.include_router(consumo_mensual_routes.router)
 app.include_router(consumo_distrito_routes.router)
+app.include_router(consumo_subsidio_routes.router)
