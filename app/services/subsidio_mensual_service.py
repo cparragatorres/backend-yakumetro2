@@ -11,7 +11,7 @@ meses = {
 }
 
 def obtener_subsidio_mensual(numero_conexion: str):
-    """Consulta si tuvo subsidio en los últimos 6 meses para el código de conexión"""
+    """Consulta el consumo de los últimos 6 meses para el código de conexión"""
     conn = get_db()
     if not conn:
         print("❌ No se pudo conectar a la base de datos")
@@ -20,39 +20,65 @@ def obtener_subsidio_mensual(numero_conexion: str):
     try:
         cursor = conn.cursor()
 
-        query = '''
-        SELECT nummes, situdu as SUBSIDIO
+        # Segunda consulta: obtener consumo (IMTOTAL) y el promedio por distrito
+        consulta = '''
+        SELECT
+            nummes,
+            ROUND(volfac, 1) AS volfac_redondeado
         FROM ep26_24_base_codcon
-        WHERE codcon = :1
+        WHERE codcon = :codcon
         ORDER BY nummes DESC
         FETCH FIRST 6 ROW ONLY
         '''
 
-        cursor.execute(query, [numero_conexion])
-        results = cursor.fetchall()  # Obtener los resultados de los 5 últimos meses
-        print(f"🔍 Resultados obtenidos: {results}")
+        cursor.execute(consulta, {"codcon": numero_conexion})
+        consumo_results = cursor.fetchall()  # Obtener los resultados de consumo de los 6 últimos meses
+
+        # Tercera consulta: obtener el promedio por distrito
+        consulta2 = '''
+        WITH DistritoPromedio AS (
+            SELECT
+                *
+            FROM ep26_24_base_codcon b
+            JOIN ep26_24_geografica_codcon g
+                ON b.codcon = g.codcon
+            WHERE  coddis in (select coddis from ep26_24_geografica_codcon where codcon = :codcon) AND situdu = 1
+        )
+        SELECT nummes,
+            ROUND(AVG(volfac), 1) AS prom_subsidio_distrito_imtotal_redondeado
+            FROM DistritoPromedio
+            GROUP BY nummes
+            ORDER BY nummes DESC
+            FETCH FIRST 6 ROW ONLY
+        '''
+
+        cursor.execute(consulta2, {"codcon": numero_conexion})
+        promedio_results = cursor.fetchall()  # Obtener los resultados del promedio por distrito
 
         cursor.close()
         conn.close()
 
-        # Si los resultados existen, procesamos los datos
-        if results:
-            subsidio_mensual = []
+        # Si ambos resultados existen, combinamos los datos
+        if consumo_results and promedio_results:
+            consumo_distrito = []
 
-            for result in results:
-                mes = meses.get(result[0], "Mes Desconocido")  # Mapear el mes
-                subsidio = result[1]
+            # Creamos un diccionario para combinar los resultados
+            for consumo, promedio in zip(consumo_results, promedio_results):
+                mes = meses.get(consumo[0], "Mes Desconocido")  # Mapear el mes
+                consumo_formateado = float(f"{consumo[1]:.2f}")
+                promedio_formateado = float(f"{promedio[1]:.2f}")
 
-                subsidio_mensual.append({
+                consumo_distrito.append({
                     "mes": mes,
-                    "subsidio": subsidio,
+                    "promedio": promedio_formateado,
+                    "consumo": consumo_formateado
                 })
 
-            subsidio_mensual = subsidio_mensual[::-1]  # Invertimos el orden de los meses
-            print(f"🔍 Subsidio mensual procesado: {subsidio_mensual}")
-            return subsidio_mensual
+            consumo_distrito = consumo_distrito[::-1]  # Invertimos el orden de los meses para mostrar de más antiguo a más reciente
+            print(f"🔍 Consumo distrito procesado: {consumo_distrito}")
+            return consumo_distrito
         else:
-            print("❌ No se encontraron resultados para la consulta")
+            print("❌ No se encontraron resultados para las consultas")
             return None
 
     except Exception as e:
