@@ -12,5 +12,5 @@ def get_volumen_facturado(numero_conexion: str):
 
   return {
     "numero_conexion": numero_conexion,
-    "volumen_facturado": result[0]
+    "volumen_facturado": result
   }
