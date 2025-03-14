@@ -80,8 +80,8 @@ def obtener_subsidio_mensual(numero_conexion: str):
 
                 consumo_subsidio.append({
                     "mes": mes,
-                    "promedio": promedio_formateado,
                     "consumo": consumo_formateado,
+                    "promedio": promedio_formateado,
                     "subsidio": subsidio_value,
                 })
 
